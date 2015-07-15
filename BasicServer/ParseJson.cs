@@ -106,6 +106,12 @@ namespace BasicServer
                 JsonReturn = _videoFormActionDelegate(Server.VideoAction.VideoPlayerControls, JsonMessage[1]);
                 return JsonReturn;
             }
+
+            else if (JsonMessage[0] == "Sessions")
+            {
+                JsonReturn = _videoFormActionDelegate(Server.VideoAction.Sessions, JsonMessage[1]);
+                return JsonReturn;
+            }
             
             return JsonReturn;
 

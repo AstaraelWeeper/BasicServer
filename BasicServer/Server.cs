@@ -59,7 +59,8 @@ namespace BasicServer
         public enum VideoAction
         {
             InitialisePlayers,
-            VideoPlayerControls
+            VideoPlayerControls,
+            Sessions
         }
 
         public string PerformVideoAction(VideoAction action, string message)
@@ -80,6 +81,10 @@ namespace BasicServer
                 {
                     JsonReturn = VideoPlayerControls(message);
                 }
+                else if (action == VideoAction.Sessions)
+                {
+                    JsonReturn = SessionsHandler(message);
+                }
                 else
                 {
                     JsonReturn = "video action failed";
@@ -90,106 +95,71 @@ namespace BasicServer
             }
         }
 
+        public string SessionsHandler(string message)
+        {
+            string stringReturnMessage = "";
+            string testJSONlist = "{\"sessions\":[{\"name\":\"A\",\"date\":\"01/01/2010\",\"list\":\"1\"},{\"name\":\"B\",\"date\":\"05/11/2013\",\"list\":\"2\"},{\"name\":\"C\",\"date\":\"15/04/2015\",\"list\":\"3\"}]}";
+            if (message.Contains("Load"))
+            {
+                //needs to return type: Sessions, Body: Name, Date, List
+                stringReturnMessage = "{\"messageType\":\"Sessions\",\"messageBody\":" + testJSONlist + "}";
+            }
+            return stringReturnMessage;
+        }
         public string VideoPlayerControls(string message)
         {
             string stringReturnMessage = "";
-            string testJSONlist = "{\"info\":[{\"start\":\"0\",\"end\":\"5\",\"ELR\":\"0\"},{\"start\":\"5\",\"end\":\"10\",\"ELR\":\"20\"},{\"start\":\"10\",\"end\":\"15\",\"ELR\":\"99\"}]}";
 
             if (videoDisplay != null)
             {
 
                 if (message.Contains("Stop"))
                 {
-                    if (videoDisplay != null)
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Stopped\"}";
-                    }
-                    else
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
-                    }
+                    stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Stopped\"}";
                     return stringReturnMessage;
                 }
                 else if (message.Contains("Pause"))
                 {
-                    if (videoDisplay != null)
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Paused\"}";
-                    }
-                    else
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
-                    }
+
+                    stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Paused\"}";
+
                     return stringReturnMessage;
                 }
                 else if (message.Contains("Play"))
                 {
-                    if (videoDisplay != null)
-                    {
-                        stringReturnMessage = "{\"messageType\":\"List\",\"messageBody\":" + testJSONlist + "}";
-                       
-                    }
-                    else
-                    {
-                        //stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
-                        videoDisplay = new VideoDisplay();
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Playing\"}";
-                    }
+
+                    stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Playing\"}";
+
                     return stringReturnMessage;
                 }
                 else if (message.Contains("Play Forwards"))
                 {
-                    if (videoDisplay != null)
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Playing Forwards\"}";
 
-                    }
-                    else
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
-                    }
-                    return stringReturnMessage;
+                    stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Playing Forwards\"}";
+
                 }
                 else if (message.Contains("Play Backwards"))
                 {
-                    if (videoDisplay != null)
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Playing Backwards\"}";
 
-                    }
-                    else
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
-                    }
-                    return stringReturnMessage;
+                    stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Playing Backwards\"}";
+
+
                 }
                 else if (message.Contains("Step Forwards"))
                 {
-                    if (videoDisplay != null)
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Stepped Forwards\"}";
 
-                    }
-                    else
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
-                    }
+                    stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Stepped Forwards\"}";
+
                     return stringReturnMessage;
                 }
                 else if (message.Contains("Step Backwards"))
                 {
-                    if (videoDisplay != null)
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Stepped Backwards\"}";
+                    stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"Stepped Backwards\"}";
 
-                    }
-                    else
-                    {
-                        stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
-                    }
                     return stringReturnMessage;
                 }
             }
+            stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
             return stringReturnMessage;
         }
 
