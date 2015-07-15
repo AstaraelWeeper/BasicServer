@@ -99,10 +99,29 @@ namespace BasicServer
         {
             string stringReturnMessage = "";
             string testJSONlist = "{\"sessions\":[{\"name\":\"A\",\"date\":\"01/01/2010\",\"list\":\"1\"},{\"name\":\"B\",\"date\":\"05/11/2013\",\"list\":\"2\"},{\"name\":\"C\",\"date\":\"15/04/2015\",\"list\":\"3\"}]}";
+            string testLocation_MediaJSON1 = File.ReadAllText("C:\\Users\\Rachel Griffiths\\Documents\\Testing\\jsondetail.txt");
+            string testLocation_MediaJSON2 = File.ReadAllText("C:\\Users\\Rachel Griffiths\\Documents\\Testing\\jsondetail2.txt");
+            string testLocation_MediaJSON3 = File.ReadAllText("C:\\Users\\Rachel Griffiths\\Documents\\Testing\\jsondetail3.txt");
+
             if (message.Contains("Load"))
             {
                 //needs to return type: Sessions, Body: Name, Date, List
                 stringReturnMessage = "{\"messageType\":\"Sessions\",\"messageBody\":" + testJSONlist + "}";
+            }
+            else//will be sending one session to return location and media details for
+            {
+                if (message == "0")
+                {
+                    stringReturnMessage = "{\"messageType\":\"Detail\",\"messageBody\":" + testLocation_MediaJSON1 + "}";
+                }
+                else if (message == "1")
+                {
+                    stringReturnMessage = "{\"messageType\":\"Detail\",\"messageBody\":" + testLocation_MediaJSON2 + "}";
+                }
+                else if (message == "2")
+                {
+                    stringReturnMessage = "{\"messageType\":\"Detail\",\"messageBody\":" + testLocation_MediaJSON3 + "}";
+                }
             }
             return stringReturnMessage;
         }
