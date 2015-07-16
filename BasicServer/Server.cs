@@ -60,7 +60,8 @@ namespace BasicServer
         {
             InitialisePlayers,
             VideoPlayerControls,
-            Sessions
+            Sessions,
+            Media
         }
 
         public string PerformVideoAction(VideoAction action, string message)
@@ -85,6 +86,10 @@ namespace BasicServer
                 {
                     JsonReturn = SessionsHandler(message);
                 }
+                else if (action == VideoAction.Media)
+                {
+                    JsonReturn = MediaHandler(message);
+                }
                 else
                 {
                     JsonReturn = "video action failed";
@@ -99,9 +104,9 @@ namespace BasicServer
         {
             string stringReturnMessage = "";
             string testJSONlist = "{\"sessions\":[{\"name\":\"A\",\"date\":\"01/01/2010\",\"list\":\"1\"},{\"name\":\"B\",\"date\":\"05/11/2013\",\"list\":\"2\"},{\"name\":\"C\",\"date\":\"15/04/2015\",\"list\":\"3\"}]}";
-            string testLocation_MediaJSON1 = File.ReadAllText("C:\\Users\\Rachel Griffiths\\Documents\\Testing\\jsondetail.txt");
-            string testLocation_MediaJSON2 = File.ReadAllText("C:\\Users\\Rachel Griffiths\\Documents\\Testing\\jsondetail2.txt");
-            string testLocation_MediaJSON3 = File.ReadAllText("C:\\Users\\Rachel Griffiths\\Documents\\Testing\\jsondetail3.txt");
+            string testLocation_MediaJSON1 = "{\"locations\":[{\"name\":\"1\",\"ELR\":\"5\",\"Line\":\"0\",\"Distance\":\"5\",\"Date\":\"0\"},{\"name\":\"2\",\"ELR\":\"5\",\"Line\":\"0\",\"Distance\":\"5\",\"Date\":\"0\"},{\"name\":\"3\",\"ELR\":\"5\",\"Line\":\"0\",\"Distance\":\"5\",\"Date\":\"0\"},{\"name\":\"4\",\"ELR\":\"5\",\"Line\":\"0\",\"Distance\":\"5\",\"Date\":\"0\"}],\"media\":[{\"name\":\"0\",\"type\":\"5\"},{\"name\":\"0\",\"type\":\"5\"}]}";
+            string testLocation_MediaJSON2 = File.ReadAllText("C:\\Users\\Rachel Griffiths\\Documents\\Testing\\jsondetail2.txt").Replace(" ", "").Replace(System.Environment.NewLine, "");
+            string testLocation_MediaJSON3 = File.ReadAllText("C:\\Users\\Rachel Griffiths\\Documents\\Testing\\jsondetail3.txt").Replace(" ", "").Replace(System.Environment.NewLine, "");
 
             if (message.Contains("Load"))
             {
@@ -123,6 +128,14 @@ namespace BasicServer
                     stringReturnMessage = "{\"messageType\":\"Detail\",\"messageBody\":" + testLocation_MediaJSON3 + "}";
                 }
             }
+            return stringReturnMessage;
+        }
+
+        public string MediaHandler(string message)
+        {
+            string stringReturnMessage = "";
+            //use this integer value to open the correct media item.
+            stringReturnMessage = "{\"messageType\":\"Media\",\"messageBody\":\"Opened Media " + message + "\"}";
             return stringReturnMessage;
         }
         public string VideoPlayerControls(string message)
