@@ -16,9 +16,7 @@ namespace BasicServer
 {
     class ParseJson
     {
-        //PowerpointHandler powerpointHandler = new PowerpointHandler();
-        List<string> history = new List<string>();
-        string storedHistoryFilePath = @"C:\Users\Public\MissionManagerHistory.txt";
+
 
         private Server.VideoFormActionDelegate _videoFormActionDelegate;
 
@@ -26,11 +24,6 @@ namespace BasicServer
         public ParseJson(Server.VideoFormActionDelegate videoFormActionDelegate)
         {
             _videoFormActionDelegate = videoFormActionDelegate;
-
-            if (!File.Exists(storedHistoryFilePath))
-            {
-                File.Create(storedHistoryFilePath).Dispose();
-            }
         }
 
 

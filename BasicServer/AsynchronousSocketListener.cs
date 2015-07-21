@@ -41,7 +41,7 @@ namespace BasicServer
                     break;
                 }
             }
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 15000);
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 15000); //port defined here
 
             // Create a TCP/IP socket.
             using (Socket listener = new Socket(AddressFamily.InterNetwork,
@@ -116,7 +116,7 @@ namespace BasicServer
                 // Check for end-of-file tag. If it is not there, read 
                 // more data.
                 content = state.sb.ToString().Remove(0, 2);
-                //   if (content.IndexOf("<EOF>") > -1)
+                //   if (content.IndexOf("<EOF>") > -1)   //these blocks are commented out as we are not using an EOF check.
                 //   {
                 // All the data has been read from the 
                 // client. Display it on the console.
@@ -125,9 +125,6 @@ namespace BasicServer
                 //callJSONParse    
                 ParseJson parseJson = new ParseJson(_videoFormActionDelegate);
                 JsonReturn = parseJson.InitialParsing(content); //parse message
-
-
-                //put in delegates here to get the proper jsonreturn
                 Send(handler, JsonReturn);
              
 

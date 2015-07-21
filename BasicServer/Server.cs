@@ -19,12 +19,12 @@ namespace BasicServer
         public delegate string VideoFormActionDelegate(VideoAction action, string message);
         private VideoFormActionDelegate videoFormActionDelegate;
         string storedMessagesFilePath = @"C:\Users\Public\BasicServerLog.txt";
-        List<string> MessageLog = new List<string>();
-        VideoDisplay videoDisplay = new VideoDisplay();
+        List<string> MessageLog = new List<string>(); //this is for the stored message debugging - can remove if desired
+        VideoDisplay videoDisplay = new VideoDisplay(); //this is just to test the video player exists - you have your own video player class already so sub that in if you want to keep the check for messages affecting the player
         public Server()
         {
             InitializeComponent();
-            if (!File.Exists(storedMessagesFilePath))
+            if (!File.Exists(storedMessagesFilePath)) //this is just to store the sent/received messages for debugging. You can remove this if desired
             {
                 File.Create(storedMessagesFilePath).Dispose();
             }
@@ -113,7 +113,7 @@ namespace BasicServer
                 //needs to return type: Sessions, Body: Name, Date, List
                 stringReturnMessage = "{\"messageType\":\"Sessions\",\"messageBody\":" + testJSONlist + "}";
             }
-            else//will be sending one session to return location and media details for
+            else//will be sending one session number to return location and media details for
             {
                 if (message == "0")
                 {
@@ -193,6 +193,11 @@ namespace BasicServer
             }
             stringReturnMessage = "{\"messageType\":\"VideoPlayer\",\"messageBody\":\"No Video Player\"}";
             return stringReturnMessage;
+        }
+
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            txtServer.Text = "";
         }
 
     }
